@@ -13,8 +13,8 @@ function loadCategories() {
     .then (data => displayCategories(data.categories))
 }
 
-function loadVideos() {
-    fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
+function loadVideos(searchText = '') {
+    fetch(`https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`)
         .then(res => res.json())
         .then(data => {
             document.getElementById("btn-all").classList.add("active");
@@ -96,7 +96,7 @@ const displayVideos = (videos) => {
             <h2 class="text-2xl font-bold">Oops! sorry, There is no content here</h2>
           </div>
         `
-        return; 
+        return;
     }
     videos.forEach((video) => {
         // console.log(videos);
@@ -119,6 +119,7 @@ const displayVideos = (videos) => {
                     <div class="intro ">
                     <h2 class="text-2xl font-semibold ">Midnight Serenade</h2>
                     <p class="text-sm text-gray-400 flex gap-1">${video.authors[0].profile_name}
+                        ${video.authors[0].verified}
                         <img class="w-5 h-5" src="https://static.vecteezy.com/system/resources/thumbnails/047/309/930/small_2x/verified-badge-profile-icon-png.png" alt="" />
                     </p>
                     <p class="text-sm text-gray-400 ">${video.others.views}</p>
@@ -130,5 +131,9 @@ const displayVideos = (videos) => {
 
         videosContainer.append(videoCard)
     })
-}
+};
+document.getElementById("search-input").addEventListener("keyup", (e) => {
+    const input = e.target.value;
+      loadVideos(input)  ;
+})
 loadCategories();
