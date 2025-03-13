@@ -1,3 +1,11 @@
+function removeActiveClass() {
+    const activeButton = document.getElementsByClassName("active");
+    // console.log(activeButton)
+    for (let btn of activeButton) {
+                btn.classList.remove("active");
+            }
+}
+
 function loadCategories() {
     // console.log("category is loading")
     fetch('https://openapi.programming-hero.com/api/phero-tube/categories')
@@ -8,8 +16,10 @@ function loadCategories() {
 function loadVideos() {
     fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
         .then(res => res.json())
-    .then(data => displayVideos(data.videos
-))
+        .then(data => {
+            document.getElementById("btn-all").classList.add("active");
+        displayVideos(data.videos)
+    })
 }
 // category_id: '1001',
 // category: 'Music'
@@ -21,7 +31,14 @@ const loadCategoriesVideos = (id) => {
 
     fetch(url)
         .then((res) => res.json())
-    .then((data) => displayVideos(data.category))
+        .then((data) => {
+            removeActiveClass();
+            const clickdButton = document.getElementById(`btn-${id}`);
+            clickdButton.classList.add("active");
+            
+            console.log(clickdButton)
+            displayVideos(data.category)
+        });
 }
 
 function displayCategories(categories) {
@@ -30,38 +47,27 @@ function displayCategories(categories) {
         // console.log(cat)
         const categoryDiv = document.createElement('div')
         categoryDiv.innerHTML = `
-        <button onclick = "loadCategoriesVideos(${cat.category_id})" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
+        <button id="btn-${cat.category_id}" onclick = "loadCategoriesVideos(${cat.category_id})" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
         `
 
         categoryContainer.append(categoryDiv)
     }
 }
 
-
-// {category_id: '1001', video_id: 'aaah', thumbnail: 'https://i.ibb.co/hY496Db/coloer-of-the-wind.jpg', title: 'Colors of the Wind', authors: Array(1), …}
-// authors
-// : 
-// [{…}]
-// category_id
-// : 
-// "1001"
-// description
-// : 
-// "Ethan Clark's 'Colors of the Wind' is a vibrant musical exploration that captivates listeners with its rich, expressive melodies and uplifting rhythm. With 233K views, this song is a celebration of nature's beauty and human connection, offering a soothing and enriching experience for fans of heartfelt, nature-inspired music."
-// others
-// : 
-// {views: '233K', posted_date: '16090'}
-// thumbnail
-// : 
-// "https://i.ibb.co/hY496Db/coloer-of-the-wind.jpg"
-// title
-// : 
-// "Colors of the Wind"
-// video_id
-// : 
-// "aaah"
 const displayVideos = (videos) => {
-    const videosContainer = document.getElementById('videos-container')
+    const videosContainer = document.getElementById('videos-container');
+
+    videosContainer.innerHTML = "";
+
+    if (videos.length == 0) {
+        videosContainer.innerHTML = `
+         <div class="col-span-full text-center flex flex-col justify-center items-center py-20">
+            <img class="w-[120px]" src="assests/Icon.png" alt="" />
+            <h2 class="text-2xl font-bold">Oops! sorry, There is no content here</h2>
+          </div>
+        `
+        return; 
+    }
     videos.forEach((video) => {
         // console.log(videos);
 
