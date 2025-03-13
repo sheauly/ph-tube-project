@@ -20,12 +20,42 @@ function loadVideos() {
             document.getElementById("btn-all").classList.add("active");
         displayVideos(data.videos)
     })
+};
+
+const loadVideoDetails = (videoId) => {
+    console.log(videoId);
+    const url = `
+    https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`;
+    fetch(url)
+        .then((res) => res.json())
+    .then(data => displayvideosDetails(data.video))
+}
+
+const displayvideosDetails = (videos) => {
+    console.log(videos);
+    document.getElementById('video_details').showModal();
+    const detailsContainer = document.getElementById("details-contaoiner");
+
+    detailsContainer.innerHTML = `
+    <div class="card bg-base-100 image-full  shadow-sm">
+  <figure>
+    <img
+      src="${videos.thumbnail}"
+      alt="Shoes" />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title">${videos.title}</h2>
+    <p>${videos.description}</p>
+  
+  </div>
+</div>
+    `
 }
 // category_id: '1001',
 // category: 'Music'
 
 const loadCategoriesVideos = (id) => {
-    console.log(id);
+    // console.log(id);
     const url = ` https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
     console.log(url);
 
@@ -94,6 +124,7 @@ const displayVideos = (videos) => {
                     <p class="text-sm text-gray-400 ">${video.others.views}</p>
                     </div>
                 </div>
+                <button onclick=loadVideoDetails('${video.video_id}') class="btn btn-block">Show Details</button>
             </div>
         `
 
