@@ -11,18 +11,26 @@
 
 <body>
     <header>
-        <nav class="w-11/12 mx-auto flex justify-between py-3 border-b-2">
+        <nav class="w-11/12 mx-auto flex justify-between py-5 border-b-2 border-[#17171720]">
             <div class="logo">
-                <img src="assests/Logo.png" alt="" />
+                <img class="w-[120px]" src="assests/Logo.png" alt="" />
             </div>
             <div class="Sort">
                 <button class="btn">Sort By View</button>
             </div>
             <div class="Blogs">
-                <button class="btn">Blogs</button>
+                <button class="btn bg-[#FF1F3D] text-white">Blogs</button>
             </div>
         </nav>
     </header>
+    <nav id="category-container" class="flex py-5 justify-center gap-5">
+    <button onclick="loadVideos()" class="btn btn-sm bg-[#FF1F3D] text-white">All</button>
+    
+    </nav>
+    <section class="w-11/12 mx-auto grid grid-cols-4 gap-5" id="videos-container">
+           
+    </section>
+    <script src="script/index.js"></script>
 </body>
 
 </html>
