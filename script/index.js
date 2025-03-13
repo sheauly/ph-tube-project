@@ -111,7 +111,7 @@ const displayVideos = (videos) => {
         return;
     }
     videos.forEach((video) => {
-        // console.log(videos);
+        console.log(videos);
 
         const videoCard = document.createElement("div");
         videoCard.innerHTML = `
@@ -131,8 +131,8 @@ const displayVideos = (videos) => {
                     <div class="intro ">
                     <h2 class="text-2xl font-semibold ">Midnight Serenade</h2>
                     <p class="text-sm text-gray-400 flex gap-1">${video.authors[0].profile_name}
-                        ${video.authors[0].verified}
-                        <img class="w-5 h-5" src="https://static.vecteezy.com/system/resources/thumbnails/047/309/930/small_2x/verified-badge-profile-icon-png.png" alt="" />
+                        ${video.authors[0].verified == true ? `<img class="w-5 h-5" src="https://static.vecteezy.com/system/resources/thumbnails/047/309/930/small_2x/verified-badge-profile-icon-png.png" alt="" />` : ``}
+                        
                     </p>
                     <p class="text-sm text-gray-400 ">${video.others.views}</p>
                     </div>
